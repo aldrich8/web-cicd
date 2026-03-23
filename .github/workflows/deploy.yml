@@ -7,19 +7,13 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            rm -rf /var/www/mon-site/*
-            mkdir -p /var/www/mon-site
-            echo "Deploy en cours..."
+      - name: Deploy locally
+        run: |
+          sudo rm -rf /var/www/mon-site/*
+          sudo cp -r * /var/www/mon-site/
